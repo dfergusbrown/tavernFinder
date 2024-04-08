@@ -1,4 +1,6 @@
 import express from "express"
+import 'dotenv/config.js'
+import './config/dbConnection.js'
 
 //Server instance
 const app = express()
