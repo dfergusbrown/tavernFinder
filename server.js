@@ -2,6 +2,7 @@ import express from "express"
 import 'dotenv/config.js'
 import './config/dbConnection.js'
 import userRouter from './routes/userRouter.js'
+import postRouter from './routes/postRouter.js'
 
 //Server instance
 const app = express()
@@ -12,6 +13,7 @@ app.use(express.json())
 
 //ROUTERS
 app.use('/user', userRouter)
+app.use('/post', postRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`)

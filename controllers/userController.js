@@ -6,6 +6,7 @@ const SECRET = process.env.SECRET_KEY
 
 async function getUsers(req, res) {
     try {
+        console.log('getting Users...')
         const users = await User.find({})
 
         if (!users) {
