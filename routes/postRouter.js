@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createPost, deletePost, getPosts, updatePost } from "../controllers/postController.js";
+import { createPost, deletePost, getPosts, searchPosts, updatePost } from "../controllers/postController.js";
 
 const router = Router()
 
@@ -8,6 +8,6 @@ router.post('/', createPost)
 router.put('/:id', updatePost)
 router.delete('/:id', deletePost)
 
-router.get('/search', )
+router.get('/search', searchPosts)
 
 export default router

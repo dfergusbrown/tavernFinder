@@ -3,13 +3,17 @@ import Post from "../models/postModel.js";
 async function searchPosts(req, res) {
     try {
         const searchParam = req.body
-        const searchObj = {}
-        for (const [key, value] of Object.entries(object1)) {
-            console.log(`${key}: ${value}`);
+        let searchObj = {}
+        if (searchParam) {
+            for (const [key, value] of Object.entries(searchParam)) {
+                value !== '' ? searchObj[key] = value : null
+            }
         }
-        const posts = await Post.find({})
+        console.log(searchObj)
+        const posts = await Post.find(searchObj)
 
         res.json({
+            numOfResults: posts.length,
             results: posts
         })
     } catch (error) {
