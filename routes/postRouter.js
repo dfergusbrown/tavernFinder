@@ -7,7 +7,7 @@ const router = Router()
 router.get('/', getPosts)
 router.post('/', createPost)
 router.put('/:id', verifyAuth, updatePost)
-router.delete('/:id', deletePost)
+router.delete('/:id', verifyAuth, deletePost)
 
 router.get('/search', searchPosts)
 
