@@ -8,4 +8,6 @@ router.post('/', createPost)
 router.put('/:id', updatePost)
 router.delete('/:id', deletePost)
 
+router.get('/search', )
+
 export default router

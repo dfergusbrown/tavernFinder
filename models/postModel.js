@@ -25,10 +25,28 @@ const postSchema = Schema({
     campaignName: { type: String, required: [true, 'Campaign name required']},
     description:  { type: String, required: [true, 'Description name required']},
     players:  Array,
-    totalSlots:  { type: String, required: [true, 'This field is required']},
+    totalSlots:  { 
+        type: String, 
+        required: [true, 'This field is required'],
+        min: 1
+    },
     startTime: Date,
-    expectLength: Number,
-    expectLUnit: String,
+    expectedLength:  { 
+        type: String, 
+        required: [true, 'This field is required'],
+        enum: ['one-shot', 'short campaign', 'long campaign']
+    },
+    frequency: {
+        type: String,
+        enum: ['every week', 'every other week', 'monthly']
+    },
+    freqDays: {
+        type: [String],
+        enum: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun']
+    },
+    timeOfDay: {
+        type: Number,
+    },
     playStyle: playStyleSchema,
     charCreation: charCreationSchema,
     comments: Array

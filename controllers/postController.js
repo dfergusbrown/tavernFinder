@@ -1,5 +1,22 @@
 import Post from "../models/postModel.js";
 
+async function searchPosts(req, res) {
+    try {
+        const searchParam = req.body
+        const searchObj = {}
+        for (const [key, value] of Object.entries(object1)) {
+            console.log(`${key}: ${value}`);
+        }
+        const posts = await Post.find({})
+
+        res.json({
+            results: posts
+        })
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 async function getPosts(req, res) {
     try {
         const posts = await Post.find({})
@@ -51,5 +68,6 @@ export {
     getPosts,
     createPost,
     updatePost,
-    deletePost
+    deletePost,
+    searchPosts
 }
