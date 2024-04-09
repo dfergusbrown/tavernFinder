@@ -1,5 +1,11 @@
 import { Schema, model } from "mongoose";
 
+const commentsSchema = Schema({
+    text: { type: String, required: [true, 'This field is required']},
+    userId: {type: Schema.Types.ObjectId, ref: 'User'},
+    timePosted: Date
+})
+
 const playStyleSchema = Schema({
     offersSeshZero:  { type: Boolean, required: [true, 'This field is required']},
     roleplayHvy: { type: String, required: [true, 'This field is required']},
@@ -49,8 +55,9 @@ const postSchema = Schema({
     },
     playStyle: playStyleSchema,
     charCreation: charCreationSchema,
-    comments: Array
+    comments: [commentsSchema]
 })
+
 
 const Post = model('Post', postSchema)
 
