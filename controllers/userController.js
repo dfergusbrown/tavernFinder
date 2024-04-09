@@ -34,7 +34,10 @@ async function signin(req, res) {
 
         //Sign the JWT token
         const token = jwt.sign(
-            { username: username },
+            { 
+                username: username,
+                userId: user._id
+            },
             SECRET,
             {expiresIn: '1d'}
         )
