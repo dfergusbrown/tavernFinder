@@ -13,6 +13,10 @@ async function searchPosts(req, res) {
                                 { "campaignName": { "$regex": value, "$options": "i" } },
                                 { "description": { "$regex": value, "$options": "i" } }
                             ]
+                    } else if (key === "totalSlots") {
+                        searchObj[key] = {$gte: value}
+                    } else if (key === "freqDays") {
+                        searchObj[key] = {$in: value}
                     } else {
                         searchObj[key] = value
                     }
