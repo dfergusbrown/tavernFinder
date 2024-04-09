@@ -3,10 +3,20 @@ import Post from "../models/postModel.js";
 async function searchPosts(req, res) {
     try {
         const searchParam = req.body
-        let searchObj = {}
+        const searchObj = {}
         if (searchParam) {
             for (const [key, value] of Object.entries(searchParam)) {
-                value !== '' ? searchObj[key] = value : null
+                if (value !== '') {
+                    if (key === "campaignName" ||
+                        key === "description") {
+                        searchObj["$or"] = [
+                                { "campaignName": { "$regex": value, "$options": "i" } },
+                                { "description": { "$regex": value, "$options": "i" } }
+                            ]
+                    } else {
+                        searchObj[key] = value
+                    }
+                }
             }
         }
         console.log(searchObj)

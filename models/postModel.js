@@ -26,7 +26,7 @@ const postSchema = Schema({
     description:  { type: String, required: [true, 'Description name required']},
     players:  Array,
     totalSlots:  { 
-        type: String, 
+        type: Number, 
         required: [true, 'This field is required'],
         min: 1
     },
