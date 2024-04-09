@@ -29,10 +29,55 @@ async function postComment (req, res) {
         console.error(error)
     }
 }
-// const comId = req.params.comId
-// const comments = post.comments.id()
+
+async function editComment(req, res) {
+    try {
+        //get IDs
+        const id = req.params.postId
+        const comId = req.params.comId
+
+        const commentEdit = req.body
+        //find Post and Comment
+        const post = await Post.findById(id)
+        const comment = post.comments.id(comId)
+        //replace text
+        comment['text'] = commentEdit.text
+        await post.save()
+
+        res.json({
+            message: "Comment edited successfully!"
+        })
+
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+async function deleteComment(req, res) {
+    try {
+        //get IDs
+        const id = req.params.postId
+        const comId = req.params.comId
+
+        //find Post and Comment
+        const post = await Post.findById(id)
+        const comment = post.comments.id(comId)
+        comment.deleteOne()
+
+        await post.save()
+
+        res.json({
+            message: "Comment successfully deleted!"
+        })
+
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 export {
     getAllComments,
-    postComment
+    postComment,
+    editComment,
+    deleteComment
 }
