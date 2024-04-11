@@ -3,8 +3,7 @@ import { deleteComment, editComment, getAllComments, postComment } from "../cont
 
 const router = Router()
 
-router.get('/:postId/', getAllComments)
-// router.get('/:postId/:comId', )
+router.get('/:postId', getAllComments)
 router.post('/:postId', postComment)
 router.put('/:postId/:comId', editComment)
 router.delete('/:postId/:comId', deleteComment)

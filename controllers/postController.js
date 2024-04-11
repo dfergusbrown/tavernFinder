@@ -37,8 +37,9 @@ async function searchPosts(req, res) {
 
 async function getPosts(req, res) {
     try {
+        console.log('get all posts initiated')
         const posts = await Post.find({})
-
+        // console.log(posts)
         res.json(posts)
     } catch (error) {
         console.error(error)

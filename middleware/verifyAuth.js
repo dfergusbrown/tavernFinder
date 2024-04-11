@@ -25,4 +25,7 @@ async function verifyAuth (req, res, next) {
 
 }
 
+// verifyAuthUser
+// verifyAuthComment
+
 export default verifyAuth
