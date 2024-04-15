@@ -4,19 +4,29 @@ async function searchPosts(req, res) {
     try {
         const searchParam = req.body
         const searchObj = {}
+
         if (searchParam) {
+            const freqArr = []
             for (const [key, value] of Object.entries(searchParam)) {
                 if (value !== '') {
-                    if (key === "campaignName" ||
-                        key === "description") {
+                    if (key === "keyword") {
                         searchObj["$or"] = [
                                 { "campaignName": { "$regex": value, "$options": "i" } },
                                 { "description": { "$regex": value, "$options": "i" } }
                             ]
                     } else if (key === "totalSlots") {
                         searchObj[key] = {$gte: value}
-                    } else if (key === "freqDays") {
-                        searchObj[key] = {$in: value}
+                    } else if (key === `daysOfWkOpts1` ||
+                                key === `daysOfWkOpts2` ||
+                                key === `daysOfWkOpts3` ||
+                                key === `daysOfWkOpts4` ||
+                                key === `daysOfWkOpts5` ||
+                                key === `daysOfWkOpts6` ||
+                                key === `daysOfWkOpts7`) {
+                        freqArr.push(value) // add values to array
+                        const inObj = {} // create includes object
+                        inObj['$in'] = freqArr // add array to object
+                        searchObj['freqDays'] = inObj
                     } else {
                         searchObj[key] = value
                     }
@@ -24,7 +34,7 @@ async function searchPosts(req, res) {
             }
         }
         console.log(searchObj)
-        const posts = await Post.find(searchObj)
+        const posts = await Post.find(searchObj).populate('userId', 'username').exec()
 
         res.json({
             numOfResults: posts.length,
@@ -37,10 +47,32 @@ async function searchPosts(req, res) {
 
 async function getPosts(req, res) {
     try {
-        console.log('get all posts initiated')
-        const posts = await Post.find({})
-        // console.log(posts)
+
+        const posts = await Post.find({}).populate('userId', 'username').exec()
         res.json(posts)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+async function getPostsById(req, res) {
+    try {
+        const id = req.params.id
+        const posts = await Post.find({_id: id}).populate('userId', 'username').exec()
+        res.json(posts)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+async function getPostsByUserId(req, res) {
+    try {
+        const userId = req.params.userId
+        const posts = await Post.find({userId: userId})
+
+        res.json({
+            results: posts
+        })
     } catch (error) {
         console.error(error)
     }
@@ -49,10 +81,13 @@ async function getPosts(req, res) {
 async function createPost(req, res) {
     try {
         const postData = req.body
+        postData.userId = req.params.userId
+
         const post = await Post.create(postData)
+        post ? console.log('post successful') : null
         res.status(201).json(post)
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
@@ -88,5 +123,7 @@ export {
     createPost,
     updatePost,
     deletePost,
-    searchPosts
+    searchPosts,
+    getPostsById,
+    getPostsByUserId
 }

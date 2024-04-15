@@ -17,7 +17,7 @@ app.use(cors())
 //ROUTERS
 app.use('/user', userRouter)
 app.use('/post', postRouter)
-app.use('/comment', commentRouter)
+app.use('/comments', commentRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`)

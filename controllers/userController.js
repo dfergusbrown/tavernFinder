@@ -19,7 +19,7 @@ async function getUsers(req, res) {
     }
 }
 
-async function signin(req, res) {
+async function login(req, res) {
     try {
         const { username, password } = req.body
         const user = await User.findOne({username: username}) //find user in DB
@@ -30,21 +30,22 @@ async function signin(req, res) {
             res.status(401).json({
                 passwordError: `The password was incorrect`
             })
+        } else {
+            //Sign the JWT token
+            const token = jwt.sign(
+                { 
+                    username: username,
+                    userId: user._id
+                },
+                SECRET,
+                {expiresIn: '1d'}
+            )
+            //respond with ONLY token
+            res.json({
+                token: token
+            })
         }
 
-        //Sign the JWT token
-        const token = jwt.sign(
-            { 
-                username: username,
-                userId: user._id
-            },
-            SECRET,
-            {expiresIn: '1d'}
-        )
-        //respond with ONLY token
-        res.json({
-            token: token
-        })
     } catch (error) {
         console.error(error)
     }
@@ -67,7 +68,7 @@ async function register(req, res) {
 }
 
 export {
-    signin,
+    login,
     register,
     getUsers
 }

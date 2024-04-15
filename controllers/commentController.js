@@ -4,7 +4,12 @@ import Post from "../models/postModel.js"
 async function getAllComments (req, res) {
     try {
         const id = req.params.postId
-        const comments = await Post.findById(id).comments
+
+        const post = await Post.findById(id).populate({
+            path: 'comments',
+            populate: { path: 'userId', select: 'username'}
+        })
+        const comments = post.comments
 
         res.json(comments)
     } catch (error) {
@@ -16,8 +21,8 @@ async function postComment (req, res) {
     try {
         const id = req.params.postId
         const comment = req.body
-        const post = await Post.findById(id)
 
+        const post = await Post.findById(id)
         comment["timePosted"] = new Date()
         post.comments.push(comment)
         await post.save()

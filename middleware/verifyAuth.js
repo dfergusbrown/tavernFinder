@@ -25,7 +25,25 @@ async function verifyAuth (req, res, next) {
 
 }
 
+async function extractId(req, res, next) {
+    const tokenHeader = req.headers.authorization
+    const token = tokenHeader.substring(7)
+    const validToken = jwt.verify(token, SECRET)
+
+    req.params.userId = validToken.userId
+
+    if (!validToken || token.exp > new Date()) {
+        res.status(498).json({
+            tokenError: `Invalid token or expired, re-authenticate`
+        })
+    }
+    next()
+}
+
 // verifyAuthUser
 // verifyAuthComment
 
-export default verifyAuth
+export {
+    verifyAuth,
+    extractId    
+} 

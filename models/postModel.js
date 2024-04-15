@@ -7,21 +7,21 @@ const commentsSchema = Schema({
 })
 
 const playStyleSchema = Schema({
-    offersSeshZero:  { type: Boolean, required: [true, 'This field is required']},
+    offersSeshZero:  { type: String, required: [true, 'This field is required']},
     roleplayHvy: { type: String, required: [true, 'This field is required']},
     combatHvy: { type: String, required: [true, 'This field is required']},
     exploreHvy: { type: String, required: [true, 'This field is required']},
-    drinking: { type: String, required: [true, 'This field is required']},
-    snacks: { type: String, required: [true, 'This field is required']},
-    "maps&minis": Boolean,
+    drinking: { type: String },
+    snacks: String,
+    "maps&minis": String,
     sandboxVsLinear: String,
     hbrewVsMod: String
 })
 
 const charCreationSchema = Schema({
     abilityScores: { type: String, required: [true, 'This field is required']},
-    sourceMaterial: { type: String, required: [true, 'This field is required']},
-    restrictions: { type: String, required: [true, 'This field is required']},
+    sourceMaterial: { type: String },
+    restrictions: { type: String },
     startingLvl: Number
 })
 
@@ -50,9 +50,7 @@ const postSchema = Schema({
         type: [String],
         enum: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun']
     },
-    timeOfDay: {
-        type: Number,
-    },
+    timeOfDay: String,
     playStyle: playStyleSchema,
     charCreation: charCreationSchema,
     comments: [commentsSchema]
