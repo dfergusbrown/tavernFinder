@@ -10,6 +10,7 @@
 Front-end deployed on vercel: https://tavern-finder-frontend.vercel.app/
 Back-end deployed on heroku: https://tavern-finder-api-03e4c798f637.herokuapp.com/
 trello board: https://trello.com/b/vY6c4zyw/tavern-finder
+lucidchartERD: ![alt text](image-5.png)
 
 - **Attributions**: 
  - Bootstrap was used heavily to render several pre-styled components such as a navbar, modal, and accordion
