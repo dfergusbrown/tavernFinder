@@ -15,6 +15,25 @@ async function verifyAuth (req, res, next) {
         res.status(498).json({
             tokenError: `Invalid token or expired, re-authenticate`
         })
+    }
+    res.status(200).send({message: 'user logged in'})
+    
+
+}
+
+async function verifyAuthPost (req, res, next) {
+    const tokenHeader = req.headers.authorization
+    const token = tokenHeader.substring(7)
+    const validToken = jwt.verify(token, SECRET)
+    
+    const id = req.params.id
+    const post = await Post.findById(id)
+
+    if (!validToken || token.exp > new Date()) {
+        res.status(498).json({
+            tokenError: `Invalid token or expired, re-authenticate`
+        })
+
     } else if (post.userId.toString() !== validToken.userId) {
         res.status(401).json({
             message: `You are not authorized to perform this function`
@@ -22,6 +41,7 @@ async function verifyAuth (req, res, next) {
     } else {
         next()
     }
+    res.status(200).send({message: 'user logged in'})
 
 }
 
@@ -45,5 +65,6 @@ async function extractId(req, res, next) {
 
 export {
     verifyAuth,
-    extractId    
+    extractId,
+    verifyAuthPost    
 } 
