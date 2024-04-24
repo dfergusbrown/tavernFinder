@@ -16,7 +16,7 @@ async function verifyAuth (req, res, next) {
             tokenError: `Invalid token or expired, re-authenticate`
         })
     }
-    res.status(200).send({message: 'user logged in'})
+    res.status(200).send()
     
 
 }
